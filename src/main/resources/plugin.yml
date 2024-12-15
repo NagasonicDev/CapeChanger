@@ -1,0 +1,4 @@
+name: CustomCapes
+version: '${version}'
+main: au.nagasonic.customcapes.CustomCapes
+api-version: '1.20'
