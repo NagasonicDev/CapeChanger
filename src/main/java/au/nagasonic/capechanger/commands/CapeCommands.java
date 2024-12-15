@@ -17,8 +17,11 @@ import java.util.List;
 public class CapeCommands implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (args.length != 1 && args.length != 2){
+            Util.sendColMsg(sender, "&cYou have entered arguments in wrong. Proper execution: &e/cape <capename> <player>");
+        }
         Player player;
-        if (args[1] != null){
+        if (args.length == 2){
             player = Bukkit.getPlayer(args[1]);
             if (player == null) {
                 Util.sendColMsg(sender, "&cThere is no player named &e" + args[1]);
