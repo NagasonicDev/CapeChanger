@@ -1,7 +1,6 @@
-package au.nagasonic.skonic.elements.util;
+package au.nagasonic.capechanger.util;
 
-import au.nagasonic.skonic.Skonic;
-import ch.njol.skript.util.Version;
+import au.nagasonic.capechanger.CapeChanger;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.bukkit.Bukkit;
@@ -18,11 +17,11 @@ import java.net.URL;
 import java.util.concurrent.CompletableFuture;
 
 public class UpdateChecker implements Listener {
-    private final Skonic plugin;
+    private final CapeChanger plugin;
     private final Version pluginVersion;
     private Version currentUpdateVersion;
 
-    public UpdateChecker(Skonic plugin) {
+    public UpdateChecker(CapeChanger plugin) {
         this.plugin = plugin;
         this.pluginVersion = new Version(plugin.getDescription().getVersion());
             setupJoinListener();
@@ -34,11 +33,11 @@ public class UpdateChecker implements Listener {
             @EventHandler
             private void onJoin(PlayerJoinEvent event) {
                 Player player = event.getPlayer();
-                if (!player.hasPermission("skonic.update.check")) return;
+                if (!player.hasPermission("capechanger.update.check")) return;
 
                 Bukkit.getScheduler().runTaskLater(UpdateChecker.this.plugin, () -> getUpdateVersion(true).thenApply(version -> {
-                    Util.sendColMsg(player, "&7[&9Skonic&7] Update available: &a" + version);
-                    Util.sendColMsg(player, "&7[&9Skonic&7] Download at &bhttps://github.com/NagasonicDev/Skonic/releases");
+                    Util.sendColMsg(player, "&7[&eCapeChanger&7] Update available: &a" + version);
+                    Util.sendColMsg(player, "&7[&eCapeChanger&7] Download at &bhttps://github.com/NagasonicDev/CapeChanger/releases");
                     return true;
                 }), 30);
             }
@@ -51,7 +50,7 @@ public class UpdateChecker implements Listener {
             Util.logLoading("&cPlugin is not up to date!");
             Util.logLoading(" - Current version: &cv%s", this.pluginVersion);
             Util.logLoading(" - Available update: &av%s", version);
-            Util.logLoading(" - Download available at: https://github.com/NagasonicDev/Skonic/releases");
+            Util.logLoading(" - Download available at: https://github.com/NagasonicDev/CapeChanger/releases");
             return true;
         }).exceptionally(throwable -> {
             Util.logLoading("&aPlugin is up to date!");
@@ -96,7 +95,7 @@ public class UpdateChecker implements Listener {
     @SuppressWarnings("CallToPrintStackTrace")
     private @Nullable Version getLastestVersionFromGitHub() {
         try {
-            URL url = new URL("https://api.github.com/repos/NagasonicDev/Skonic/releases/latest");
+            URL url = new URL("https://api.github.com/repos/NagasonicDev/CapeChanger/releases/latest");
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             JsonObject jsonObject = new Gson().fromJson(reader, JsonObject.class);
             String tag_name = jsonObject.get("tag_name").getAsString();

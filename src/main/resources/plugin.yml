@@ -1,4 +1,9 @@
 name: CustomCapes
 version: '${version}'
-main: au.nagasonic.customcapes.CustomCapes
+main: au.nagasonic.capechanger.CapeChanger
 api-version: '1.20'
+commands:
+  cape:
+    description: Changes the Cape of a player
+    usage: /cape <capename>
+    permission: customcapes.changecape
